@@ -1,6 +1,3 @@
-//lex_auth_012887123561635840652
-//do not modify the above line
-
 package stackAssignment_1;
 
 public class Stack {
