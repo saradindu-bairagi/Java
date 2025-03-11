@@ -34,13 +34,7 @@ class Tester {
             if(isDivisibleBy1To10(current)) {
                 resultQueue.enqueue(current);
             }
-            // Enqueue into tempQueue to restore original queue
-            tempQueue.enqueue(current);
-        }
 
-        // Restore the original queue contents (optional, if needed)
-        while(!tempQueue.isEmpty()) {
-            queue.enqueue(tempQueue.dequeue());
         }
 
         // Return the queue containing numbers divisible by 1..10
