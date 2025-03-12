@@ -1,3 +1,5 @@
+package oops.pp3;
+
 class Mart {
     public static String [] itemNameArr= {"Chocolate","Perfume","Bouquet","Apparel"};
     public static float [] itemPriceArr= {200.0f,400.0f,150.0f,300.0f};
@@ -43,7 +45,24 @@ class OnlineMart extends Mart{
         float pricePerItem = 0.0f;
 
         //write your code here
-
+        float unitPrice = super.findPricePerItem(itemName);
+        if(unitPrice==-1.0f)
+        {
+            pricePerItem=-1.0f;
+        }
+        else
+        {
+            identifyOnlineDiscount();
+            if(onlineDiscountPercentage==-1)
+            {
+                pricePerItem=-1.0f;
+            }
+            else
+            {
+                float discount = (unitPrice*onlineDiscountPercentage)/100;
+                pricePerItem=unitPrice-discount;
+            }
+        }
         return pricePerItem;
     }
 
@@ -57,17 +76,39 @@ class OnlineMart extends Mart{
     //To_Trainee
     public int checkItemAvailability() {
         //write your code here
-
-
+        String itemName = order.getItemName();
+        int quantityRequired = order.getQuantityRequired();
+        for(int i=0;i<Mart.itemNameArr.length;i++)
+        {
+            if(itemName.equals(Mart.itemNameArr[i]))
+            {
+                if(quantityRequired<=itemQuantityArr[i])
+                {
+                    Mart.itemQuantityArr[i] -= quantityRequired;
+                    return quantityRequired;
+                }
+            }
+        }
         //change return statement accordingly
-        return 0;
-
+        return -1;
     }
 
     //To_Trainee
     public void shipOrder() {
 
         //write your code here
+        int quantity = checkItemAvailability();
+        float pricePerItem = findPricePerItem(order.getItemName());
+        if(quantity==-1 || findPricePerItem(order.getItemName())==-1.0f)
+        {
+            order.setOrderPrice(-1.0);
+            order.setTrackingId("NA");
+        }
+        else
+        {
+            order.setOrderPrice(quantity*pricePerItem);
+            order.generateTrackingId();
+        }
 
     }
 }
@@ -120,9 +161,8 @@ class Order{
 
     //To_Trainee
     public void generateTrackingId(){
-
         //write your code here
-
+        setTrackingId("TR"+counter++);
     }
 }
 
